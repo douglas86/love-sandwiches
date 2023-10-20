@@ -15,8 +15,12 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
 def get_sales_data():
     """
-    Get sales input from the user
-    :return: sales_data
+    Get sales figures input from the user.
+    Run a while loop to collect a valid string of data from the user
+    via the terminal, which must be a string of six numbers separated
+    by commas.
+    The loop will repeat request data until it is valid.
+    :return: Sales_data
     """
     while True:
         print("Please enter sales data from the last market.")
