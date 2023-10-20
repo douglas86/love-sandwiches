@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -73,20 +71,21 @@ def update_sales_worksheet(d):
     print("Sales worksheet updated successfully.\n")
 
 
-def calculate_surplus_data(sales_data):
+def calculate_surplus_data(sales_row):
     """
     Compares sales with stocks and calculate the surplus for each item type.
 
     The surplus is defined as the sales figure subtracted from the stock:
     - Positive surplus indicates waste
     - Negative surplas indicates extra made what stock is sold out.
-    :param sales_data:
+    :param sales_row:
     :return:
     """
     print("Culculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    pprint(stock_row)
+
+    return [int(stock) - sales for stock, sales in zip(stock_row, sales_row)]
 
 
 def main():
@@ -97,7 +96,9 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+
+    print(new_surplus_data)
 
 
 print("Welcome to love Sandwiches data automation")
