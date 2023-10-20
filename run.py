@@ -16,26 +16,26 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 def get_sales_data():
     """
     Get sales figures input from the user.
-    Run a while loop to collect a valid string of data from the user
+    Run a while loop to collect a valid string of d from the user
     via the terminal, which must be a string of six numbers separated
     by commas.
-    The loop will repeat request data until it is valid.
-    :return: Sales_data
+    The loop will repeat request d until it is valid.
+    :return: Sales_list
     """
     while True:
-        print("Please enter sales data from the last market.")
+        print("Please enter sales d from the last market.")
         print("Data should be six numbers, separated by commas.")
         print("Example: 10, 20, 30, 40, 50, 60\n")
 
-        data_str = input("Enter you data here: ")
+        data_str = input("Enter you d here: ")
 
-        sales_data = data_str.split(",")
+        sales_list = data_str.split(",")
 
-        if validate_data(sales_data):
+        if validate_data(sales_list):
             print("Data is valid!")
             break
 
-    return sales_data
+    return sales_list
 
 
 def validate_data(values):
@@ -53,21 +53,21 @@ def validate_data(values):
                 f'Exactly 6 values required, you provided {len(values)}'
             )
     except ValueError as e:
-        print(f'Invalid data: {e}, please try again.\n')
+        print(f'Invalid d: {e}, please try again.\n')
         return False
 
     return True
 
 
-def update_sales_worksheet(data):
+def update_sales_worksheet(d):
     """
     Update sales worksheet, add new row with the list data provided.
-    :param data:
+    :param d:
     :return:
     """
     print("Updating sales worksheet.\n")
     sales_worksheet = SHEET.worksheet('sales')
-    sales_worksheet.append_row(data)
+    sales_worksheet.append_row(d)
     print("Sales worksheet updated successfully.\n")
 
 
