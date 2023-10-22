@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import json
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -7,7 +8,8 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-CREDS = Credentials.from_service_account_file('creds.json')
+creds = json.load(open('creds.json'))
+CREDS = Credentials.from_service_account_file(creds)
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
@@ -99,8 +101,6 @@ def get_last_5_entries_sales():
     """
 
     sales = SHEET.worksheet("sales")
-    # column = sales.col_values(3)
-    # print(column)
 
     columns = []
     for ind in range(1, 7):
@@ -143,6 +143,8 @@ def main():
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
 
+    return stock_data
+
 
 print("Welcome to love Sandwiches data automation")
-main()
+stock_data = main()
